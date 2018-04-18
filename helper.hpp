@@ -4,10 +4,12 @@
 #include <vector>
 #include <fstream>
 #include <climits>
+#include <random>
 
 typedef unsigned int uint;
 #define TABLES_PER_THREAD 1
-//#define MAX_INT 1000000000000000000l
+#define RANDOM_SEED 123
 
 uint convert(const char bp);
 std::vector<std::string> openAndReadFile(std::string, int &);
+uint[] generateRand(uint);

@@ -17,7 +17,7 @@ main(int argc, const char* argv[])
 
 		norm = openAndReadFile(fNames[0], minLen);	
 		rand = openAndReadFile(fNames[1], minLen2);
-		minLen = (minLen > minLen2) ? minLen : minLen2;
+		minLen = (minLen > minLen2) ? minLen2 : minLen;
 		return 0;
 }
 

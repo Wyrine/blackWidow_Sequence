@@ -2,7 +2,6 @@
 
 using namespace std;
 
-
 vector<string> 
 openAndReadFile(string fname, int &minLen)
 {
@@ -47,4 +46,19 @@ convert(const char bp)
 						break;
 		}
 		return rv;
+}
+
+uint[] 
+generateRand(uint size)
+{
+		uint rv[size], checkInit[size];
+		memset(checkInit, 0, size*sizeof(uint));
+		memset(rv, 0, size*sizeof(uint));
+
+		srand(RANDOM_SEED);
+
+		for(uint i = 0; i < size; ++i)
+		{
+								
+		}
 }
