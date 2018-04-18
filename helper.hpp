@@ -5,4 +5,6 @@
 #include <vector>
 
 typedef unsigned int uint;
-#define TABLES_TO_THREAD 1
+#define TABLES_PER_THREAD 1
+
+uint convert(const char bp);

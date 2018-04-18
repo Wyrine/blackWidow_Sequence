@@ -19,22 +19,20 @@ main(int argc, const char* argv[])
 /*
 1) Read each 'query' string from the main strand into memory
 		1) Create a vector of strings that are the normal sequence
+		1a) Calculate minimum string length
 		2) Create a vector of strings that are the random sequence
 		3) Create the threads 
 				--Thread view --
-				1)Randomize the indices to look up
+				1)Randomize the hashes to look up
 				2)Sort them in ascending order
 				for(int i = 0; i < s1.length(); i++){
-						for(int j = 0; j < indices.length(); j++)
+						for(int j = 0; j < hashes.length(); j++)
 						{
-								int c = convert(s1[i][indices[j]]);
+								int c = convert(s1[i][hashes[j]]);
 								//can probably do s2 here too
 								~~~~~~~check this next line, unsure about these offsets~~~~~~~
-								c = c << indices[indices.length() - j - 1] - 1;
+								c = c << (hashes.length() - count)*2; //count starts at 1
 								//insert into hash table
 						}
 				}
-
-
-
 */
