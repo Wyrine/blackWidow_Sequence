@@ -8,11 +8,16 @@ main(int argc, const char* argv[])
 {
 		string fNames[2];
 		uint threadCount = thread::hardware_concurrency();
-		
+		int minLen, minLen2;
+		minLen = minLen2 = INT_MAX;
+		vector<string> rand, norm;
+
 		for(int i = 1; i < argc; i++)
 				fNames[i-1] = string(argv[i]);
-		cout << threadCount << endl;
 
+		norm = openAndReadFile(fNames[0], minLen);	
+		rand = openAndReadFile(fNames[1], minLen2);
+		minLen = (minLen > minLen2) ? minLen : minLen2;
 		return 0;
 }
 
