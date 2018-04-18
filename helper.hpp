@@ -12,4 +12,4 @@ typedef unsigned int uint;
 
 uint convert(const char bp);
 std::vector<std::string> openAndReadFile(std::string, int &);
-uint[] generateRand(uint);
+std::vector<uint> generateRand(uint, uint);

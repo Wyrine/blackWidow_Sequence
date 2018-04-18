@@ -48,17 +48,22 @@ convert(const char bp)
 		return rv;
 }
 
-uint[] 
-generateRand(uint size)
+vector<uint>
+generateRand(uint size, uint n)
 {
-		uint rv[size], checkInit[size];
-		memset(checkInit, 0, size*sizeof(uint));
-		memset(rv, 0, size*sizeof(uint));
+		vector<uint> rv;
+		bool checkInit[n];
 
+		memset(checkInit, 0, n*sizeof(uint));
 		srand(RANDOM_SEED);
 
 		for(uint i = 0; i < size; ++i)
 		{
-								
+				uint tmp = rand() % n;
+
+				while(checkInit[tmp]) tmp = rand() % n;
+				checkInit[tmp] = true;
+				rv.push_back(tmp);
 		}
+		return rv;
 }

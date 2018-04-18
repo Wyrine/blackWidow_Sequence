@@ -22,11 +22,12 @@ main(int argc, const char* argv[])
 }
 
 /*
-1) Read each 'query' string from the main strand into memory
-		1) Create a vector of strings that are the normal sequence
-		1a) Calculate minimum string length
-		2) Create a vector of strings that are the random sequence
-		3) Create the threads 
+		* := task completed finished
+		*1) Create a vector of strings that are the normal sequence
+		*1a) Calculate minimum string length
+		*2) Create a vector of strings that are the random sequence
+		*3) Generate the m random indices
+		4) Create the threads 
 				--Thread view --
 				1)Randomize the hashes to look up
 				2)Sort them in ascending order
