@@ -1,5 +1,4 @@
 #include <iostream>
-#include <utility>
 #include "helper.hpp"
 
 using namespace std;
@@ -9,17 +8,25 @@ main(int argc, const char* argv[])
 {
 		string fNames[2];
 		Seq rand, norm;
-		//table[i].first := vector of indices into norm
-		//table[i].second := vector of indices into rand
-		pair<v_uint, v_uint> table[(ulli)pow(4, HASH_LEN)];
+		ulli maxInd = (ulli) pow(4, HASH_LEN);
 		uint threadCount = thread::hardware_concurrency();
+
+		//the threads to create
+		thread threads[threadCount];
+		//the results of each thread for the number of tables 
+		//they are going to make
+		double results[threadCount][TABLES_PER_THREAD];
 
 		for(int i = 1; i < argc; i++)
 				fNames[i-1] = string(argv[i]);
 
 		norm = openAndReadFile(fNames[0]);	
 		rand = openAndReadFile(fNames[1]);
-
+		//for each thread allowed on this system
+		for(uint i = 0; i < thread::hardware_concurrency(); i++)	
+				threads[i] = thread(threadWork, norm, rand, maxInd, results[i]);
+		for(uint i = 0; i < thread::hardware_concurrency(); i++)	
+				threads[i].join();
 		return 0;
 }
 
@@ -31,8 +38,8 @@ main(int argc, const char* argv[])
 		*3) Generate the m random indices
 		4) Create the threads 
 				--Thread view --
-				1)Randomize the hashes to look up
-				2)Sort them in ascending order
+				*1)Randomize the hashes to look up
+				*2)Sort them in ascending order
 				for(int i = 0; i < s1.length(); i++){
 						for(int j = 0; j < hashes.length(); j++)
 						{

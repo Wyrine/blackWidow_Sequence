@@ -4,7 +4,9 @@
 #include <vector>
 #include <fstream>
 #include <climits>
-#include <random>
+#include <cmath>
+#include <utility>
+#include <algorithm>
 
 typedef unsigned int uint;
 typedef std::vector<uint> v_uint;
@@ -37,3 +39,5 @@ public:
 uint convert(const char bp);
 Seq openAndReadFile(std::string);
 v_uint generateRand(uint, uint);
+void threadWork(const Seq &, const Seq &, const ulli, double []);
+void fillTable(std::pair<v_uint, v_uint> [], const Seq &, const Seq &, const ulli);

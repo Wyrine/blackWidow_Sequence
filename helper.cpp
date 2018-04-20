@@ -64,5 +64,27 @@ generateRand(uint size, uint n)
 				checkInit[tmp] = true;
 				rv.push_back(tmp);
 		}
+		sort(rv.begin(), rv.begin()+size);
 		return rv;
+}
+
+void
+threadWork(const Seq & norm, const Seq & rand, const ulli maxInd, double myRes[])
+{
+		//table[i].first := vector of indices into norm
+		//table[i].second := vector of indices into rand
+		pair<v_uint, v_uint> table[maxInd];
+		fillTable(table, norm, rand, maxInd);
+
+		/* table should now be filled with the hashes, now generate results */
+
+}
+
+void
+fillTable(pair<v_uint, v_uint> table[], const Seq & norm, 
+						const Seq & rand, const ulli maxInd)
+{
+		//this next line causes a seg-fault. Not sure if memory or not
+		v_uint hashKeyIdx = generateRand(HASH_LEN, maxInd);
+		/* build the table */
 }
