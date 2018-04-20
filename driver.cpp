@@ -8,21 +8,20 @@ main(int argc, const char* argv[])
 {
 		string fNames[2];
 		uint threadCount = thread::hardware_concurrency();
-		int minLen, minLen2;
-		minLen = minLen2 = INT_MAX;
-		vector<string> rand, norm;
+		Seq rand, norm;
 
 		for(int i = 1; i < argc; i++)
 				fNames[i-1] = string(argv[i]);
 
-		norm = openAndReadFile(fNames[0], minLen);	
-		rand = openAndReadFile(fNames[1], minLen2);
-		minLen = (minLen > minLen2) ? minLen2 : minLen;
+		norm = openAndReadFile(fNames[0]);	
+		rand = openAndReadFile(fNames[1]);
+		for(uint i = 0; i < norm.getSize(); i++)
+				cout << norm.getElement(i) << endl;
 		return 0;
 }
 
 /*
-		* := task completed finished
+		* := task completed
 		*1) Create a vector of strings that are the normal sequence
 		*1a) Calculate minimum string length
 		*2) Create a vector of strings that are the random sequence

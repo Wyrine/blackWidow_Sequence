@@ -2,27 +2,23 @@
 
 using namespace std;
 
-vector<string> 
-openAndReadFile(string fname, int &minLen)
+Seq
+openAndReadFile(string fname)
 {
+		Seq rv;
+		string line;
+		int count = 1;
 		ifstream f(fname);
+
 		if(!f.is_open())
 		{
-				cerr << "you suck" << endl;
+				cerr << "Invalid file:" << fname << endl;
 				exit(1);
 		}
-		string line;
-		vector<string> rv;
-		int count = 1;
 		while(getline(f, line))
 		{
 				if((count + 2) % 4 == 0) 
-				{
-						if(line.length() < minLen)
-								minLen = line.length();
-						rv.push_back(line);
-						cout << line << endl;
-				}
+						rv.addSeq(line);
 				count++;
 		}
 		f.close();
