@@ -17,8 +17,7 @@ openAndReadFile(string fname)
 		}
 		while(getline(f, line))
 		{
-				if((count + 2) % 4 == 0) 
-						rv.addSeq(line);
+				if((count + 2) % 4 == 0) rv.addSeq(line);
 				count++;
 		}
 		f.close();
@@ -40,14 +39,18 @@ convert(const char bp)
 				case 'G':
 						rv = 3;
 						break;
+				default:
+						break;
 		}
 		return rv;
 }
 
-vector<uint>
+//size is the hash size we want
+//n is the string length or the maxIndex + 1
+v_uint
 generateRand(uint size, uint n)
 {
-		vector<uint> rv;
+		v_uint rv;
 		bool checkInit[n];
 
 		memset(checkInit, 0, n*sizeof(uint));

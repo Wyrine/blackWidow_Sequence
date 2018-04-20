@@ -7,8 +7,11 @@
 #include <random>
 
 typedef unsigned int uint;
+typedef std::vector<uint> v_uint;
+typedef unsigned long long int ulli;
 #define TABLES_PER_THREAD 1
 #define RANDOM_SEED 123
+#define HASH_LEN 5
 
 class Seq 
 {
@@ -17,8 +20,6 @@ class Seq
 public:
 
 		Seq() { minLen = UINT_MAX; maxLen = 0; }
-		//void setMin(uint x) { minLen = x; }
-		//void setMax(uint x) { maxLen = x; }
 		void addSeq(std::string s) 
 		{ //add s and update min and max, if applicable 
 				subseqs.push_back(s); 
@@ -29,8 +30,10 @@ public:
 		uint getMax() const { return maxLen; }
 		uint getSize() const { return subseqs.size(); }
 		std::string getElement(const int i) const { return subseqs[i]; }	
+		uint getElementLength(const int i) const 
+		{ return subseqs[i].length(); }
 };
 
 uint convert(const char bp);
 Seq openAndReadFile(std::string);
-std::vector<uint> generateRand(uint, uint);
+v_uint generateRand(uint, uint);

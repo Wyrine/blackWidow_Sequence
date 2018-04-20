@@ -1,4 +1,5 @@
 #include <iostream>
+#include <utility>
 #include "helper.hpp"
 
 using namespace std;
@@ -7,16 +8,18 @@ int
 main(int argc, const char* argv[])
 {
 		string fNames[2];
-		uint threadCount = thread::hardware_concurrency();
 		Seq rand, norm;
+		//table[i].first := vector of indices into norm
+		//table[i].second := vector of indices into rand
+		pair<v_uint, v_uint> table[(ulli)pow(4, HASH_LEN)];
+		uint threadCount = thread::hardware_concurrency();
 
 		for(int i = 1; i < argc; i++)
 				fNames[i-1] = string(argv[i]);
 
 		norm = openAndReadFile(fNames[0]);	
 		rand = openAndReadFile(fNames[1]);
-		for(uint i = 0; i < norm.getSize(); i++)
-				cout << norm.getElement(i) << endl;
+
 		return 0;
 }
 
