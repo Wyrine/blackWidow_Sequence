@@ -27,6 +27,7 @@ main(int argc, const char* argv[])
 				threads[i] = thread(threadWork, norm, rand, maxInd, results[i]);
 		for(uint i = 0; i < thread::hardware_concurrency(); i++)	
 				threads[i].join();
+		//TODO: Analyze the results here
 		return 0;
 }
 
@@ -36,7 +37,7 @@ main(int argc, const char* argv[])
 		*1a) Calculate minimum string length
 		*2) Create a vector of strings that are the random sequence
 		*3) Generate the m random indices
-		4) Create the threads 
+		*4) Create the threads 
 				--Thread view --
 				*1)Randomize the hashes to look up
 				*2)Sort them in ascending order
@@ -50,4 +51,6 @@ main(int argc, const char* argv[])
 								//insert into hash table
 						}
 				}
+		5) Generate the results from each table
+		6) Analyze the results
 */

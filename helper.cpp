@@ -75,7 +75,7 @@ threadWork(const Seq & norm, const Seq & rand, const ulli maxInd, double myRes[]
 		//table[i].second := vector of indices into rand
 		pair<v_uint, v_uint> table[maxInd];
 		fillTable(table, norm, rand, maxInd);
-
+		//TODO: The following
 		/* table should now be filled with the hashes, now generate results */
 		/* results should be stored in myRes to reflect back in main thread */
 
@@ -105,9 +105,11 @@ fillTable(pair<v_uint, v_uint> table[], const Seq & norm, const Seq & rand,
 				for(uint j = 0; j < HASH_LEN; j++)
 				{
 						//build the keys for both the normal and random strings
+						//TODO: Ensure that this is working properly
 						hashNorm |= convert(n[hashKeyIdx[j]]) << (HASH_LEN - j - 1) * 2;
 						hashRand |= convert(r[hashKeyIdx[j]]) << (HASH_LEN - j - 1) * 2;
 				}
+				//TODO: Make sure this logic is correct
 				//after they've been built, index into the table with those hashed values
 				//and insert the index of the current string in question from the norm
 				//structure
