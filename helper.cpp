@@ -53,7 +53,7 @@ generateRand(uint size, uint n)
 		v_uint rv;
 		bool checkInit[n];
 
-		memset(checkInit, 0, n*sizeof(uint));
+		memset(checkInit, 0, n*sizeof(bool));
 		srand(RANDOM_SEED);
 
 		for(uint i = 0; i < size; ++i)
@@ -81,10 +81,9 @@ threadWork(const Seq & norm, const Seq & rand, const ulli maxInd, double myRes[]
 }
 
 void
-fillTable(pair<v_uint, v_uint> table[], const Seq & norm, 
-						const Seq & rand, const ulli maxInd)
+fillTable(pair<v_uint, v_uint> table[], const Seq & norm, const Seq & rand, 
+				const ulli maxInd)
 {
-		//this next line causes a seg-fault. Not sure if memory or not
 		v_uint hashKeyIdx = generateRand(HASH_LEN, maxInd);
 		/* build the table */
 }
