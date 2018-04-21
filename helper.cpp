@@ -71,14 +71,17 @@ generateRand(uint size, uint n)
 void
 threadWork(const Seq & norm, const Seq & rand, const ulli maxInd, double myRes[])
 {
-		//table[i].first := vector of indices into norm
-		//table[i].second := vector of indices into rand
-		pair<v_uint, v_uint> table[maxInd];
-		fillTable(table, norm, rand, maxInd);
-		//TODO: The following
-		/* table should now be filled with the hashes, now generate results */
-		/* results should be stored in myRes to reflect back in main thread */
-
+		for(uint i = 0; i < TABLES_PER_THREAD; i++)
+		{
+				//table[i].first := vector of indices into norm
+				//table[i].second := vector of indices into rand
+				pair<v_uint, v_uint> table[maxInd];
+				fillTable(table, norm, rand, maxInd);
+				//TODO: The following
+				/* table should now be filled with the hashes, now generate results */
+				/* results should be stored in myRes to reflect back in main thread */
+				//myRes[i] is the result to update
+		}
 }
 
 void
