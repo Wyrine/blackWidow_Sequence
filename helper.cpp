@@ -77,6 +77,7 @@ threadWork(const Seq & norm, const Seq & rand, const ulli maxInd, double myRes[]
 		fillTable(table, norm, rand, maxInd);
 
 		/* table should now be filled with the hashes, now generate results */
+		/* results should be stored in myRes to reflect back in main thread */
 
 }
 
@@ -84,6 +85,34 @@ void
 fillTable(pair<v_uint, v_uint> table[], const Seq & norm, const Seq & rand, 
 				const ulli maxInd)
 {
-		v_uint hashKeyIdx = generateRand(HASH_LEN, maxInd);
+		uint minLen = min(norm.getMin(), rand.getMin());
+		string n,r;
+		if(norm.getSize() != rand.getSize())
+		{
+				cerr << "norm and rand size mismatch" << endl;
+				exit(1);
+		}
+		v_uint hashKeyIdx = generateRand(HASH_LEN, minLen);
+		uint hashNorm, hashRand;
 		/* build the table */
+		//iterate through the norm and rand strings
+		for(uint i = 0; i < norm.getSize(); ++i)
+		{
+				//these are the two strings to be inserted into the hash table
+				n = norm.getElement(i);
+				r = rand.getElement(i);
+				hashNorm = hashRand = 0;
+				for(uint j = 0; j < HASH_LEN; j++)
+				{
+						//build the keys for both the normal and random strings
+						hashNorm |= convert(n[hashKeyIdx[j]]) << (HASH_LEN - j - 1) * 2;
+						hashRand |= convert(r[hashKeyIdx[j]]) << (HASH_LEN - j - 1) * 2;
+				}
+				//after they've been built, index into the table with those hashed values
+				//and insert the index of the current string in question from the norm
+				//structure
+				table[hashNorm].first.push_back(i);
+				//and do the same for the rand structure
+				table[hashRand].second.push_back(i);
+		}
 }
