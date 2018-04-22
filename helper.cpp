@@ -85,8 +85,8 @@ threadWork(const Seq & norm, const Seq & rand, const ulli maxInd, double myRes[]
 }
 
 void
-fillTable(pair<v_uint, v_uint> table[], const Seq & norm, const Seq & rand, 
-				const ulli maxInd)
+fillTable(pair<v_uint, v_uint> table[], const Seq & norm, const Seq & rand) 
+				/*const ulli maxInd did you mean to do something with this?*/
 {
 		uint minLen = min(norm.getMin(), rand.getMin());
 		string n,r;
@@ -120,4 +120,22 @@ fillTable(pair<v_uint, v_uint> table[], const Seq & norm, const Seq & rand,
 				//and do the same for the rand structure
 				table[hashRand].second.push_back(i);
 		}
+}
+
+float getSimilarity(pair<v_uint, v_uint> table[], ulli maxInd, uint numHashes)
+{
+	int matches = 0;
+
+	for(uint i = 0; i < maxInd; i++)
+	{
+		for(uint j = 0; j < table[i].first.size(); j++)
+		{
+			for(uint k = 0; k < table[i].second.size(); k++)
+			{
+				if(table[i].first[j] == table[i].second[k]) ++matches;
+			}
+		}
+	}
+
+	return float(matches / numHashes);
 }
