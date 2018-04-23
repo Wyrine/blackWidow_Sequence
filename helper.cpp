@@ -109,8 +109,8 @@ fillTable(pair<v_uint, v_uint> table[], const Seq & norm, const Seq & rand,
 				{
 						//build the keys for both the normal and random strings
 						//TODO: Ensure that this is working properly
-						hashNorm |= convert(n[hashKeyIdx[j]]) << (HASH_LEN - j - 1) * 2;
-						hashRand |= convert(r[hashKeyIdx[j]]) << (HASH_LEN - j - 1) * 2;
+						hashNorm |= convert(n[hashKeyIdx[j]]) << ((HASH_LEN - j - 1) * 2);
+						hashRand |= convert(r[hashKeyIdx[j]]) << ((HASH_LEN - j - 1) * 2);
 				}
 				//TODO: Make sure this logic is correct
 				//after they've been built, index into the table with those hashed values
