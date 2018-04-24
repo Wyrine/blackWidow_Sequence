@@ -65,13 +65,13 @@ convert(const char bp)
 //size is the hash size we want
 //n is the string length or the maxIndex + 1
 v_uint
-generateRand(uint size, uint n)
+generateRand(uint size, uint n, const ulli seed)
 {
 		v_uint rv;
 		bool checkInit[n];
 
 		memset(checkInit, 0, n*sizeof(bool));
-		srand(RANDOM_SEED);
+		srand(seed);
 
 		for(uint i = 0; i < size; ++i)
 		{
@@ -94,7 +94,7 @@ threadWork(const Seq & norm, const Seq & rand, const ulli maxInd,
 				//table[i].first := vector of indices into norm
 				//table[i].second := vector of indices into rand
 				pair<v_uint, v_uint> table[maxInd];
-				fillTable(table, norm, rand);
+				fillTable(table, norm, rand, (ulli) myRes);
 				//TODO: The following
 				/* table should now be filled with the hashes, now generate results */
 				/* results should be stored in myRes to reflect back in main thread */
@@ -140,8 +140,7 @@ getMatches(pair<v_uint, v_uint> table[], const ulli maxInd, const Seq &norm,
 }
 
 void
-fillTable(pair<v_uint, v_uint> table[], const Seq & norm, const Seq & rand) 
-				/*const ulli maxInd did you mean to do something with this?*/
+fillTable(pair<v_uint, v_uint> table[], const Seq & norm, const Seq & rand, const ulli seed) 
 {
 		uint minLen = min(norm.getMin(), rand.getMin());
 		string n,r;
@@ -150,7 +149,7 @@ fillTable(pair<v_uint, v_uint> table[], const Seq & norm, const Seq & rand)
 				cerr << "norm and rand size mismatch" << endl;
 				exit(1);
 		}
-		v_uint hashKeyIdx = generateRand(HASH_LEN, minLen);
+		v_uint hashKeyIdx = generateRand(HASH_LEN, minLen, seed);
 		uint hashNorm, hashRand;
 		/* build the table */
 		//iterate through the norm and rand strings

@@ -42,7 +42,7 @@ public:
 uint convert(const char bp);
 Seq openAndReadFile(std::string);
 uint getUnionCount(const Seq &, const Seq &); 
-v_uint generateRand(uint, uint);
+v_uint generateRand(uint, uint, const ulli);
 void threadWork(const Seq &, const Seq &, const ulli, const ulli,  double []);
 uint getMatches(std::pair<v_uint, v_uint> [], const ulli, const Seq &, const Seq &, const bool);
-void fillTable(std::pair<v_uint, v_uint> [], const Seq &, const Seq &);
+void fillTable(std::pair<v_uint, v_uint> [], const Seq &, const Seq &, const ulli);
