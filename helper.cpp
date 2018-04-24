@@ -76,7 +76,7 @@ threadWork(const Seq & norm, const Seq & rand, const ulli maxInd, double myRes[]
 				//table[i].first := vector of indices into norm
 				//table[i].second := vector of indices into rand
 				pair<v_uint, v_uint> table[maxInd];
-				fillTable(table, norm, rand, maxInd);
+				fillTable(table, norm, rand);
 				//TODO: The following
 				/* table should now be filled with the hashes, now generate results */
 				/* results should be stored in myRes to reflect back in main thread */
@@ -122,20 +122,31 @@ fillTable(pair<v_uint, v_uint> table[], const Seq & norm, const Seq & rand)
 		}
 }
 
-float getSimilarity(pair<v_uint, v_uint> table[], ulli maxInd, uint numHashes)
-{
+int getMatches(pair<v_uint, v_uint> table[], const ulli maxInd, const Seq &norm, const Seq &rand) {
 	int matches = 0;
+	int minLen, count;
+	v_uint rTemp, nTemp;
 
-	for(uint i = 0; i < maxInd; i++)
-	{
-		for(uint j = 0; j < table[i].first.size(); j++)
-		{
-			for(uint k = 0; k < table[i].second.size(); k++)
-			{
-				if(table[i].first[j] == table[i].second[k]) ++matches;
+	minLen = min(norm.getMin(), rand.getMin());
+
+	for(uint i = 0; i < maxInd; i++) {
+		if((table[i].first.size() > 0) && (table[i].second.size() > 0)) {
+			count = 0;
+			
+			for(v_uint::iterator j = table[i].first.begin(); j != table[i].first.end(); j++) {
+				for(v_uint::iterator k = table[i].second.begin(); k != table[i].second.end(); k++) {
+					for(uint l = 0; l < minLen; l++) {
+						if(norm.getElement(*j)[l] != rand.getElement(*k)[l]) ++count;
+					}
+					if(count <= TOLERANCE) {
+						++matches;
+						//if doing jaccard then:
+						//mySet.add(norm.getElement(*j).substr(0, minLen));
+					}
+				}
 			}
 		}
 	}
-
-	return float(matches / numHashes);
+	//if jaccard return mySet.size();
+	return matches;
 }

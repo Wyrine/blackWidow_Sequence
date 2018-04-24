@@ -20,6 +20,7 @@ main(int argc, const char* argv[])
 		for(int i = 1; i < argc; i++)
 				fNames[i-1] = string(argv[i]);
 
+		//norm.setLens();
 		norm = openAndReadFile(fNames[0]);	
 		rand = openAndReadFile(fNames[1]);
 		//for each thread allowed on this system
@@ -28,6 +29,7 @@ main(int argc, const char* argv[])
 		for(uint i = 0; i < thread::hardware_concurrency(); i++)	
 				threads[i].join();
 		//TODO: Analyze the results here
+		//float result = getSimilarity();
 		return 0;
 }
 

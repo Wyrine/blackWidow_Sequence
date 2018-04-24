@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <thread>
 #include <string>
@@ -14,13 +15,13 @@ typedef unsigned long long int ulli;
 #define TABLES_PER_THREAD 1
 #define RANDOM_SEED 123
 #define HASH_LEN 5
+#define TOLERANCE 2
 
 class Seq 
 {
 		uint minLen, maxLen;
 		std::vector<std::string> subseqs;
 public:
-
 		Seq() { minLen = UINT_MAX; maxLen = 0; }
 		void addSeq(std::string s) 
 		{ //add s and update min and max, if applicable 
@@ -40,4 +41,5 @@ uint convert(const char bp);
 Seq openAndReadFile(std::string);
 v_uint generateRand(uint, uint);
 void threadWork(const Seq &, const Seq &, const ulli, double []);
-void fillTable(std::pair<v_uint, v_uint> [], const Seq &, const Seq &, const ulli);
+void fillTable(std::pair<v_uint, v_uint> [], const Seq &, const Seq &);
+int getMatches(pair<v_uint, v_uint> [], const ulli, const Seq &norm, const Seq &rand);
