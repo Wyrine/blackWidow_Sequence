@@ -24,6 +24,23 @@ openAndReadFile(string fname)
 		return rv;
 }
 
+uint 
+getUnionCount(const Seq & norm, const Seq & rand)
+{
+		set<string> rv;
+		uint minLen = min(norm.getMin(), rand.getMin());
+		uint nCount = norm.getSize(), rCount = rand.getSize();
+
+		for(uint i = 0; i < max(nCount, rCount); i++)
+		{
+				if(nCount > i)
+						rv.insert(norm.getElement(i).substr(0, minLen));
+				if(rCount > i)
+						rv.insert(norm.getElement(i).substr(0, minLen));
+		}
+		return rv.size();
+}
+
 uint
 convert(const char bp)
 {
@@ -69,7 +86,8 @@ generateRand(uint size, uint n)
 }
 
 void
-threadWork(const Seq & norm, const Seq & rand, const ulli maxInd, double myRes[])
+threadWork(const Seq & norm, const Seq & rand, const ulli maxInd, 
+						const ulli setUnion, double myRes[])
 {
 		for(uint i = 0; i < TABLES_PER_THREAD; i++)
 		{
@@ -81,10 +99,11 @@ threadWork(const Seq & norm, const Seq & rand, const ulli maxInd, double myRes[]
 				/* table should now be filled with the hashes, now generate results */
 				/* results should be stored in myRes to reflect back in main thread */
 				//myRes[i] is the result to update
+				myRes[i] = ((double) getMatches(table, maxInd, norm, rand, 1)) / setUnion; 
 		}
 }
 
-int 
+uint
 getMatches(pair<v_uint, v_uint> table[], const ulli maxInd, const Seq &norm, 
 						const Seq &rand, const bool jacc) 
 {
@@ -103,24 +122,21 @@ getMatches(pair<v_uint, v_uint> table[], const ulli maxInd, const Seq &norm,
 		{
 			count = 0;
 			for(v_uint::iterator j = table[i].first.begin(); j != table[i].first.end(); j++) 
-			{
 				for(v_uint::iterator k = table[i].second.begin(); k != table[i].second.end(); k++) 
 				{
 					for(uint l = 0; l < minLen; l++) 
-					{
 						if(norm.getElement(*j)[l] != rand.getElement(*k)[l]) ++count;
-					}
 					if(count <= TOLERANCE) 
 					{
 						if (jacc) intersect.insert(norm.getElement(*j).substr(0, minLen));
 						else ++matches;
 					}
 				}
-			}
 		}
 	}
 	if(jacc) return intersect.size();
-	else return matches;
+	//otherwise
+	return matches;
 }
 
 void

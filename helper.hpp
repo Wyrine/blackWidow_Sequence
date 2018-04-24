@@ -9,12 +9,13 @@
 #include <cmath>
 #include <utility>
 #include <algorithm>
+#include <chrono>
 
 typedef unsigned int uint;
 typedef std::vector<uint> v_uint;
 typedef unsigned long long int ulli;
 #define TABLES_PER_THREAD 1
-#define RANDOM_SEED 123
+#define RANDOM_SEED time(0)
 #define HASH_LEN 5
 #define TOLERANCE 2
 
@@ -40,7 +41,8 @@ public:
 
 uint convert(const char bp);
 Seq openAndReadFile(std::string);
+uint getUnionCount(const Seq &, const Seq &); 
 v_uint generateRand(uint, uint);
-void threadWork(const Seq &, const Seq &, const ulli, double []);
-int getMatches(std::pair<v_uint, v_uint> [], const ulli, const Seq &, const Seq &, const bool);
+void threadWork(const Seq &, const Seq &, const ulli, const ulli,  double []);
+uint getMatches(std::pair<v_uint, v_uint> [], const ulli, const Seq &, const Seq &, const bool);
 void fillTable(std::pair<v_uint, v_uint> [], const Seq &, const Seq &);

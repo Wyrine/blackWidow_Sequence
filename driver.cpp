@@ -23,13 +23,23 @@ main(int argc, const char* argv[])
 		//norm.setLens();
 		norm = openAndReadFile(fNames[0]);	
 		rand = openAndReadFile(fNames[1]);
+		uint unionSize = getUnionCount(norm, rand);
 		//for each thread allowed on this system
-		for(uint i = 0; i < thread::hardware_concurrency(); i++)	
-				threads[i] = thread(threadWork, norm, rand, maxInd, results[i]);
-		for(uint i = 0; i < thread::hardware_concurrency(); i++)	
+		for(uint i = 0; i < threadCount; i++)	
+				threads[i] = thread(threadWork, norm, rand, maxInd, unionSize, results[i]);
+		for(uint i = 0; i < threadCount; i++)	
 				threads[i].join();
 		//TODO: Analyze the results here
 		//float result = getSimilarity();
+		for(int i = 0; i < threadCount; i++)
+		{
+				printf("Thread %d results:", i);
+				for(int j = 0; j < TABLES_PER_THREAD; j++)
+				{
+						printf("\t%lf", results[i][j]);
+				}
+				printf("\n");
+		}
 		return 0;
 }
 
