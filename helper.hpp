@@ -5,6 +5,7 @@
 #include <vector>
 #include <fstream>
 #include <climits>
+#include <set>
 #include <cmath>
 #include <utility>
 #include <algorithm>
@@ -41,5 +42,5 @@ uint convert(const char bp);
 Seq openAndReadFile(std::string);
 v_uint generateRand(uint, uint);
 void threadWork(const Seq &, const Seq &, const ulli, double []);
+int getMatches(std::pair<v_uint, v_uint> [], const ulli, const Seq &, const Seq &, const bool);
 void fillTable(std::pair<v_uint, v_uint> [], const Seq &, const Seq &);
-int getMatches(pair<v_uint, v_uint> [], const ulli, const Seq &norm, const Seq &rand);

@@ -84,6 +84,45 @@ threadWork(const Seq & norm, const Seq & rand, const ulli maxInd, double myRes[]
 		}
 }
 
+int 
+getMatches(pair<v_uint, v_uint> table[], const ulli maxInd, const Seq &norm, 
+						const Seq &rand, const bool jacc) 
+{
+	int matches = 0;
+	int minLen, count;
+	v_uint rTemp, nTemp;
+	set<string> intersect;
+
+
+	minLen = min(norm.getMin(), rand.getMin());
+
+	for(uint i = 0; i < maxInd; i++) 
+	{
+		//if the size of the two vectors are non-zero
+		if(table[i].first.size()  && table[i].second.size()) 
+		{
+			count = 0;
+			for(v_uint::iterator j = table[i].first.begin(); j != table[i].first.end(); j++) 
+			{
+				for(v_uint::iterator k = table[i].second.begin(); k != table[i].second.end(); k++) 
+				{
+					for(uint l = 0; l < minLen; l++) 
+					{
+						if(norm.getElement(*j)[l] != rand.getElement(*k)[l]) ++count;
+					}
+					if(count <= TOLERANCE) 
+					{
+						if (jacc) intersect.insert(norm.getElement(*j).substr(0, minLen));
+						else ++matches;
+					}
+				}
+			}
+		}
+	}
+	if(jacc) return intersect.size();
+	else return matches;
+}
+
 void
 fillTable(pair<v_uint, v_uint> table[], const Seq & norm, const Seq & rand) 
 				/*const ulli maxInd did you mean to do something with this?*/
@@ -122,31 +161,3 @@ fillTable(pair<v_uint, v_uint> table[], const Seq & norm, const Seq & rand)
 		}
 }
 
-int getMatches(pair<v_uint, v_uint> table[], const ulli maxInd, const Seq &norm, const Seq &rand) {
-	int matches = 0;
-	int minLen, count;
-	v_uint rTemp, nTemp;
-
-	minLen = min(norm.getMin(), rand.getMin());
-
-	for(uint i = 0; i < maxInd; i++) {
-		if((table[i].first.size() > 0) && (table[i].second.size() > 0)) {
-			count = 0;
-			
-			for(v_uint::iterator j = table[i].first.begin(); j != table[i].first.end(); j++) {
-				for(v_uint::iterator k = table[i].second.begin(); k != table[i].second.end(); k++) {
-					for(uint l = 0; l < minLen; l++) {
-						if(norm.getElement(*j)[l] != rand.getElement(*k)[l]) ++count;
-					}
-					if(count <= TOLERANCE) {
-						++matches;
-						//if doing jaccard then:
-						//mySet.add(norm.getElement(*j).substr(0, minLen));
-					}
-				}
-			}
-		}
-	}
-	//if jaccard return mySet.size();
-	return matches;
-}
