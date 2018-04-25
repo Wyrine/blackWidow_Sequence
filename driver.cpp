@@ -31,7 +31,7 @@ main(int argc, const char* argv[])
 				threads[i].join();
 		//TODO: Analyze the results here
 		//float result = getSimilarity();
-		for(int i = 0; i < threadCount; i++)
+/*		for(int i = 0; i < threadCount; i++)
 		{
 				printf("Thread %d results:", i);
 				for(int j = 0; j < TABLES_PER_THREAD; j++)
@@ -39,6 +39,14 @@ main(int argc, const char* argv[])
 						printf("\t%lf", results[i][j]);
 				}
 				printf("\n");
+		}*/
+		for(int i =0; i<threadCount; i++)
+				printf("Thread%d,", i);
+		for(int j = 0 ; j < TABLES_PER_THREAD; j++)
+		{
+				cout << endl;
+				for(int i = 0; i < threadCount; i++)
+						printf("%lf,", results[i][j]);
 		}
 		return 0;
 }
