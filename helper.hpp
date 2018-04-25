@@ -14,9 +14,8 @@
 typedef unsigned int uint;
 typedef std::vector<uint> v_uint;
 typedef unsigned long long int ulli;
-#define TABLES_PER_THREAD 1
-#define RANDOM_SEED time(0)
-#define HASH_LEN 5
+#define TABLES_PER_THREAD 10
+#define HASH_LEN 6
 #define TOLERANCE 2
 
 class Seq 
